@@ -1,0 +1,54 @@
+.env
+# Python bytecode
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual environment
+.venv/
+env/
+venv/
+*.egg-info/
+.env
+
+# Streamlit specific files
+# Ignore Streamlit's configuration and secrets files
+.streamlit/secrets.toml
+
+# Operating System Files
+.DS_Store # macOS
+Thumbs.db # Windows
+
+# Jupyter Notebook files (if you use them for prototyping)
+.ipynb_checkpoints/
+
+# IDE specific files (example for VS Code)
+.vscode/
+
+# Build artifacts
+dist/
+build/
+*.egg
+*.whl
+
+# Log files
+*.log
+.log/
+
+# Test/Coverage reports
+.coverage
+.pytest_cache/
+htmlcov/
+
+# Any generated media/output (videos, audio, images, etc.)
+# Based on your generator.py, you might have a 'media' folder or similar
+# where generated videos/audio are saved. You likely don't want these in Git.
+media/
+outputs/
+videos/
+audio/
+
+# Temporary files created by your app
+*.tmp
+temp/

@@ -1,0 +1,30 @@
+# requirements.txt
+
+# 1. LangChain for chaining LLM calls
+langchain>=0.0.286
+
+# 2. OpenAI client library
+openai>=0.27.0
+
+# 3. python‐dotenv to load your .env file with your API key
+python-dotenv>=1.0.0
+
+# 4. FastAPI + Uvicorn for serving an HTTP API
+fastapi>=0.95.0
+uvicorn[standard]>=0.22.0
+
+# 5. Manim-Community for rendering your math animations
+manim>=0.17.0
+
+# 6. An audio library if you self-host TTS (e.g. pyttsx3)
+pyttsx3>=2.90
+
+langchain-community>=0.0.5
+ffmpeg-python
+numpy
+streamlit
+
+supabase
+streamlit-supabase-auth
+st-supabase-connection
+fpdf
