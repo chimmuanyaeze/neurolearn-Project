@@ -13,14 +13,14 @@ RUN apt-get update && apt-get install -y \
     ffmpeg \
     libgl1-mesa-glx \
     build-essential \
-    pkg-config \       # <-- THIS LINE NOW HAS THE BACKSLASH ON THE PREVIOUS LINE
-# Other potential Manim dependencies (uncomment if you encounter issues)
-# libfreetype6-dev \
-# libjpeg-dev \
-# zlib1g-dev \
-# libsndfile1-dev \
-# git \
-&& rm -rf /var/lib/apt/lists/*
+    pkg-config \       
+    # Other potential Manim dependencies (uncomment if you encounter issues)
+    # libfreetype6-dev \
+    # libjpeg-dev \
+    # zlib1g-dev \
+    # libsndfile1-dev \
+    # git \
+    && rm -rf /var/lib/apt/lists/*
 
 # Set the working directory in the container
 WORKDIR /app
