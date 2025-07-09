@@ -3,16 +3,58 @@ import json
 from langchain.chains import LLMChain
 from langchain_core.prompts import PromptTemplate
 from langchain_openai import ChatOpenAI
-from dotenv import load_dotenv
+# from dotenv import load_dotenv # REMOVE THIS LINE
 import re
+from pathlib import Path # ADD THIS IMPORT
 
 # Load .env file and get API key
-load_dotenv()
+# load_dotenv() # REMOVE THIS LINE, environment variables are passed by Render
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 
+# --- START OF PATH FIX ---
+# Dynamically get the current file's directory
+current_dir = Path(__file__).parent
+
+# Construct the path to solution_template relative to current_dir
+# solution_chain.py is in 'chains/', and solution_template is in 'prompts/'
+# So, from 'chains/', go up one level (..) to the app root, then into 'prompts'
+template_path = current_dir.parent / "prompts" / "solution_template"
+
 # Load system prompt template
-with open(r"C:\Users\HP\Documents\projects\neurolearn\prompts\solution_template", encoding="utf-8") as f:
-    template_str = f.read()
+try:
+    with open(template_path, encoding="utf-8") as f:
+        template_str = f.read()
+except FileNotFoundError:
+    # This block will execute if the file is still not found for some reason,
+    # providing a fallback or a more explicit error message.
+    print(f"Error: Prompt template not found at {template_path}. Using fallback template.")
+    # Provide a basic fallback template string or raise a more specific error
+    template_str = """
+    You are an AI tutor. Given a STEM problem, provide a detailed step-by-step solution,
+    including a restatement of the problem, a step-by-step explanation, a visual cue,
+    and a final answer. Use the following JSON format:
+
+    {{
+      "problem": "Restatement of the problem here.",
+      "steps": [
+        {{
+          "title": "Step 1 Title",
+          "explanation": "Detailed explanation for step 1.",
+          "visual_cue": "Optional visual cue (e.g., a formula, a graph description, a key term)"
+        }},
+        {{
+          "title": "Step 2 Title",
+          "explanation": "Detailed explanation for step 2.",
+          "visual_cue": "Optional visual cue"
+        }}
+      ],
+      "final_answer": "The final numerical or conceptual answer."
+    }}
+
+    User Problem: {query}
+    """
+# --- END OF PATH FIX ---
+
 
 # Set up LangChain prompt
 prompt = PromptTemplate(
@@ -47,7 +89,7 @@ def get_solution(query: str) -> dict:
         content = content[:-3].strip()
 
     # 🔧 NEW: Remove LaTeX-style math delimiters that break JSON
-    content = re.sub(r'\\\(|\\\)', '', content)  # Removes \( and \)
+    content = re.sub(r'\\\(|\\\)', '', content)   # Removes \( and \)
 
     # Try parsing the JSON
     try:
@@ -81,4 +123,3 @@ def get_solution(query: str) -> dict:
 
     result["steps"] = normalized_steps
     return result
-
