@@ -1,0 +1,12 @@
+# .dockerignore content
+.git
+.venv
+__pycache__
+*.pyc
+.env           # Crucial: DO NOT copy your .env file into the Docker image for security!
+               # Railway handles environment variables separately.
+media/         # If you generate local files during dev, don't include them in the image
+*.mp4
+*.wav
+*.mp3
+# Any other large files or directories that are not needed in the deployed container

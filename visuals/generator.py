@@ -1,14 +1,14 @@
 import os
 import subprocess
 from pathlib import Path
-from dotenv import load_dotenv
+# from dotenv import load_dotenv # <-- REMOVE THIS IMPORT
 import cv2
 import wave
 import contextlib
 
 # Setup paths
-dir_path = Path(__file__).parent
-media_dir = dir_path / "media"
+# dir_path is no longer used for media_dir or .env loading in this context
+media_dir = Path("/tmp") / "media" # Correctly points to /tmp
 media_dir.mkdir(parents=True, exist_ok=True)
 
 # Create final output folder for merged files
@@ -16,17 +16,25 @@ final_output_dir = media_dir / "final"
 final_output_dir.mkdir(parents=True, exist_ok=True)
 
 # Load env
-dotenv_path = dir_path.parent / ".env"
-if dotenv_path.exists():
-    load_dotenv(dotenv_path)
+# REMOVE THIS BLOCK ENTIRELY, as environment variables will be passed directly to Railway
+# dotenv_path = dir_path.parent / ".env"
+# if dotenv_path.exists():
+#     load_dotenv(dotenv_path)
 
 def generate_full_solution_video(solution: dict, video_name: str = "full_solution", resolution: str = "720p") -> Path:
     """
     Generates a Manim video visualizing the solution step-by-step.
     Supports resolution: 480p, 720p, 1080p.
     """
-    script_path = dir_path / f"{video_name}.py"
-    output_path = media_dir / f"{video_name}.mp4"
+    # We still need a base path for the Manim script itself, which is part of your deployed code.
+    # This script_path needs to be relative to where your code is deployed.
+    # If visuals/generator.py is in 'your_app_root/visuals/', then the script needs to be written there.
+    # Let's re-introduce a 'script_temp_dir' within /tmp for the temporary manim script.
+    script_temp_dir = Path("/tmp") / "manim_scripts"
+    script_temp_dir.mkdir(parents=True, exist_ok=True)
+    script_path = script_temp_dir / f"{video_name}.py" # Manim script will be written to /tmp
+
+    output_path = media_dir / f"{video_name}.mp4" # Video output goes to /tmp/media
     scene_name = "FullSolution"
 
     # Resolution quality flags
@@ -100,7 +108,6 @@ class FullSolution(Scene):
         raise subprocess.CalledProcessError(result.returncode, cmd)
 
     return output_path
-
 
 
 def generate_tts_audio(solution: dict, audio_name: str = "narration") -> Path:
