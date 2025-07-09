@@ -12,8 +12,8 @@ RUN apt-get update && apt-get install -y \
     libpango1.0-dev \
     ffmpeg \
     libgl1-mesa-glx \
-    build-essential \  # <-- ADD THIS LINE
-pkg-config \       # <-- ADD THIS LINE (often needed with build-essential for C libs)
+    build-essential \
+    pkg-config \       # <-- THIS LINE NOW HAS THE BACKSLASH ON THE PREVIOUS LINE
 # Other potential Manim dependencies (uncomment if you encounter issues)
 # libfreetype6-dev \
 # libjpeg-dev \
