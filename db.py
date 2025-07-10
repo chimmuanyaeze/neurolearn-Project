@@ -4,7 +4,8 @@ from st_supabase_connection import SupabaseConnection
 import os
 
 @st.cache_resource
-def init_supabase():
+# ADD A TEMPORARY PARAMETER TO BUST THE CACHE
+def init_supabase(cache_buster=None):
     """
     Initializes and returns a SupabaseConnection object using environment variables.
     """
@@ -12,9 +13,9 @@ def init_supabase():
         supabase_url = os.getenv("SUPABASE_URL")
         supabase_key = os.getenv("SUPABASE_KEY")
 
-        # --- ADD THESE DEBUG PRINTS ---
+        # --- DEBUG PRINTS (KEEP THESE) ---
         print(f"DEBUG: init_supabase - Retrieved SUPABASE_URL: '{supabase_url}'")
-        print(f"DEBUG: init_supabase - Retrieved SUPABASE_KEY (first 5 chars): '{supabase_key[:5]}'") # Print only first few for security
+        print(f"DEBUG: init_supabase - Retrieved SUPABASE_KEY (first 5 chars): '{supabase_key[:5]}'")
         # --- END DEBUG PRINTS ---
 
         if not supabase_url or not supabase_key:

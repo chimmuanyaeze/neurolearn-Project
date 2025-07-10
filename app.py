@@ -17,7 +17,7 @@ st.set_page_config(page_title="📚 NeuroLearn STEM Visualizer", layout="wide")
 
 # --- Initialize State ---
 initialize_chat_state()
-supabase = init_supabase()
+supabase = init_supabase(cache_buster="version_1")
 user = get_current_user()
 
 
