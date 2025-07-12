@@ -1,15 +1,16 @@
 import os
 import json
+import re
+from pathlib import Path
 from langchain.chains import LLMChain
 from langchain_core.prompts import PromptTemplate
-from langchain_openai import ChatOpenAI
-# from dotenv import load_dotenv # REMOVE THIS LINE
-import re
-from pathlib import Path # ADD THIS IMPORT
+# REMOVED: from langchain_openai import ChatOpenAI
+# ADDED: Import the LangChain connector for Google's Generative AI
+from langchain_google_genai import ChatGoogleGenerativeAI 
 
 # Load .env file and get API key
-# load_dotenv() # REMOVE THIS LINE, environment variables are passed by Render
-OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+# We will now use the GOOGLE_API_KEY environment variable set on Render
+GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
 
 # --- START OF PATH FIX ---
 # Dynamically get the current file's directory
@@ -62,11 +63,13 @@ prompt = PromptTemplate(
     template=template_str
 )
 
-# Initialize LLM (OpenAI GPT)
-llm = ChatOpenAI(
-    model_name="gpt-4o-mini",
+# Initialize LLM (Google Gemini)
+# We replace ChatOpenAI with ChatGoogleGenerativeAI and specify a Gemini model
+llm = ChatGoogleGenerativeAI(
+    model="gemini-pro", # Use a suitable Gemini model (e.g., 'gemini-pro' or 'gemini-1.5-pro')
     temperature=0.2,
-    openai_api_key=OPENAI_API_KEY,
+    # Ensure we pass the GOOGLE_API_KEY retrieved from environment variables
+    google_api_key=GOOGLE_API_KEY, 
 )
 
 # Chain: prompt → LLM

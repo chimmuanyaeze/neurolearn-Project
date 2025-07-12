@@ -13,13 +13,7 @@ RUN apt-get update && apt-get install -y \
     ffmpeg \
     libgl1-mesa-glx \
     build-essential \
-    pkg-config \       
-    # Other potential Manim dependencies (uncomment if you encounter issues)
-    # libfreetype6-dev \
-    # libjpeg-dev \
-    # zlib1g-dev \
-    # libsndfile1-dev \
-    # git \
+    pkg-config \
     && rm -rf /var/lib/apt/lists/*
 
 # Set the working directory in the container

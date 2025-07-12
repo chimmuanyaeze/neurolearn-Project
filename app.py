@@ -11,6 +11,11 @@ from auth import show_login, is_logged_in, logout, get_remaining_uses, get_curre
 from db import init_supabase
 from chat_storage import get_chat_list, save_chat, get_chat_by_id
 
+st.set_page_config(
+    page_title="Bumblebee Project", # You can customize the title here
+    page_icon="favicon.ico"
+)
+
 
 st.set_page_config(page_title="📚 NeuroLearn STEM Visualizer", layout="wide")
 
