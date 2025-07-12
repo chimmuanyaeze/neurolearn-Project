@@ -56,7 +56,7 @@ with st.sidebar:
 
 
 # --- App Title (always visible) ---
-st.title("📚 NeuroLearn STEM Visualizer")
+st.title("🍯Bumble bee")
 st.caption("Chat with an AI tutor and receive video-based explanations.")
 
 # --- Render Chat Input and Process Query ---
