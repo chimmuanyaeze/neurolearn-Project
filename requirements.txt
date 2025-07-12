@@ -106,13 +106,13 @@ pyglm==2.8.2
 Pygments==2.19.1
 PyJWT==2.10.1
 pyparsing==3.2.3
-pypiwin32==223
+#pypiwin32==223
 pytest==8.4.1
 pytest-mock==3.14.1
 python-dateutil==2.9.0.post0
 python-dotenv==1.1.0
 pytz==2025.2
-pywin32==310
+#pywin32==310
 PyYAML==6.0.2
 realtime==2.5.3
 referencing==0.36.2
