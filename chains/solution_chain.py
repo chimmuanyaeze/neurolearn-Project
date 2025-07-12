@@ -66,7 +66,7 @@ prompt = PromptTemplate(
 # Initialize LLM (Google Gemini)
 # We replace ChatOpenAI with ChatGoogleGenerativeAI and specify a Gemini model
 llm = ChatGoogleGenerativeAI(
-    model="gemini-pro", # Use a suitable Gemini model (e.g., 'gemini-pro' or 'gemini-1.5-pro')
+    model="gemini-1.5-pro", # Use a suitable Gemini model (e.g., 'gemini-pro' or 'gemini-1.5-pro')
     temperature=0.2,
     # Ensure we pass the GOOGLE_API_KEY retrieved from environment variables
     google_api_key=GOOGLE_API_KEY, 
