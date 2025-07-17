@@ -4,13 +4,11 @@ import re
 from pathlib import Path
 from langchain.chains import LLMChain
 from langchain_core.prompts import PromptTemplate
-# REMOVED: from langchain_openai import ChatOpenAI
-# ADDED: Import the LangChain connector for Google's Generative AI
-from langchain_google_genai import ChatGoogleGenerativeAI 
+from langchain_openai import ChatOpenAI
 
 # Load .env file and get API key
-# We will now use the GOOGLE_API_KEY environment variable set on Render
-GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
+# We will now use the OPENAI_API_KEY environment variable
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 
 # --- START OF PATH FIX ---
 # Dynamically get the current file's directory
@@ -63,13 +61,10 @@ prompt = PromptTemplate(
     template=template_str
 )
 
-# Initialize LLM (Google Gemini)
-# We replace ChatOpenAI with ChatGoogleGenerativeAI and specify a Gemini model
-llm = ChatGoogleGenerativeAI(
-    model="gemini-1.5-pro", # Use a suitable Gemini model (e.g., 'gemini-pro' or 'gemini-1.5-pro')
+# Initialize LLM (OpenAI)
+llm = ChatOpenAI(
+    model="gpt-4o-mini",  # Use a suitable OpenAI model
     temperature=0.2,
-    # Ensure we pass the GOOGLE_API_KEY retrieved from environment variables
-    google_api_key=GOOGLE_API_KEY, 
 )
 
 # Chain: prompt → LLM
@@ -92,7 +87,7 @@ def get_solution(query: str) -> dict:
         content = content[:-3].strip()
 
     # 🔧 NEW: Remove LaTeX-style math delimiters that break JSON
-    content = re.sub(r'\\\(|\\\)', '', content)   # Removes \( and \)
+    content = re.sub(r'\\\(|\\\)', '', content)  # Removes \( and \)
 
     # Try parsing the JSON
     try:

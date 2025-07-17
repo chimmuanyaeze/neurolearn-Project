@@ -1,3 +1,5 @@
+import os
+from dotenv import load_dotenv # Ensure .env is loaded to access environment variables when running locally
 import streamlit as st
 from chains.solution_chain import get_solution
 from visuals.generator import generate_full_solution_video, generate_tts_audio, merge_audio_video
@@ -11,6 +13,13 @@ from auth import show_login, is_logged_in, logout, get_remaining_uses, get_curre
 from db import init_supabase
 from chat_storage import get_chat_list, save_chat, get_chat_by_id
 
+load_dotenv() # Ensure .env is loaded to access environment variables when running locally 
+
+# This is a debugg  line that ensures the required environment variable is present
+if not os.environ.get("OPENAI_API_KEY"):
+    raise ValueError("OPENAI_API_KEY environment variable is not set.")
+
+# Set the page title and icon
 st.set_page_config(
     page_title="Bumblebee Project", # You can customize the title here
     page_icon="favicon.ico"
