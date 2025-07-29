@@ -52,3 +52,4 @@ audio/
 # Temporary files created by your app
 *.tmp
 temp/
+test_openai_key.py

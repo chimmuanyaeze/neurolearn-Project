@@ -70,7 +70,7 @@ with st.sidebar:
 
 
 # --- App Title (always visible) ---
-st.title("🍯Bumble bee")
+st.title("Neurolearn")
 st.caption("Chat with an AI tutor and receive video-based explanations.")
 
 # --- Render Chat Input and Process Query ---
@@ -95,7 +95,7 @@ if is_logged_in() or get_remaining_uses() > 0: # Only show chat input if logged 
 
                 # Professional explanation for the user
                 explanation_message = """
-                Thank you for your interest in the Bumblebee Project! Below is a demonstration video showcasing the type of high-quality, animated solution our platform generates.
+                Thank you for your interest in the Neurolearn Project! Below is a demonstration video showcasing the type of high-quality, animated solution our platform generates.
 
                 ### Why a Demo Version?
                 While our core technology is fully functional, this demo is currently in place due to funding constraints for two essential, high-cost services:
