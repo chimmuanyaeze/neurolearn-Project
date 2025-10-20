@@ -1,33 +1,46 @@
 # db.py
+import os
+import logging
 import streamlit as st
 from st_supabase_connection import SupabaseConnection
-import os
+
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)
+
+# Configure a console handler so errors are visible in deploy logs too
+if not logger.handlers:
+    ch = logging.StreamHandler()
+    ch.setLevel(logging.INFO)
+    formatter = logging.Formatter("%(asctime)s [%(levelname)s] %(message)s")
+    ch.setFormatter(formatter)
+    logger.addHandler(ch)
+
 
 @st.cache_resource
-# ADD A TEMPORARY PARAMETER TO BUST THE CACHE
-def init_supabase(cache_buster=None):
+def init_supabase(cache_buster: str | None = None):
     """
-    Initializes and returns a SupabaseConnection object using environment variables.
+    Initialize and return a Supabase connection wrapper via Streamlit's st.connection.
+    Raises RuntimeError on missing configuration.
     """
     try:
         supabase_url = os.getenv("SUPABASE_URL")
         supabase_key = os.getenv("SUPABASE_KEY")
 
-        # --- DEBUG PRINTS (KEEP THESE) ---
-        print(f"DEBUG: init_supabase - Retrieved SUPABASE_URL: '{supabase_url}'")
-        print(f"DEBUG: init_supabase - Retrieved SUPABASE_KEY (first 5 chars): '{supabase_key[:5]}'")
-        # --- END DEBUG PRINTS ---
-
         if not supabase_url or not supabase_key:
-            st.error("Supabase credentials (SUPABASE_URL, SUPABASE_KEY) are missing in environment variables. Please check your Render service's environment variable settings.")
-            st.stop()
+            logger.error("Supabase URL/KEY not set in environment variables.")
+            raise RuntimeError("Supabase configuration missing. Please set SUPABASE_URL and SUPABASE_KEY.")
 
-        return st.connection(
+        # Use streamlit's connection factory for Supabase
+        conn = st.connection(
             name="supabase",
             type=SupabaseConnection,
             url=supabase_url,
             key=supabase_key,
         )
-    except Exception as e:
-        st.error(f"Error initializing Supabase connection: {e}")
-        st.stop()
+        logger.info("Supabase connection initialized.")
+        return conn
+
+    except Exception as exc:
+        logger.exception("Failed to initialize supabase connection.")
+        # Re-raise so callers can handle (and Streamlit can stop if desired)
+        raise
